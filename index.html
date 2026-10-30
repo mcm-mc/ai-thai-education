@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI FOR THAI EDUCATION - ปฏิวัติการศึกษาไทยด้วยปัญญาประดิษฐ์</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#06b6d4',
+                        darkBg: '#0f172a',
+                        cardBg: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Prompt', sans-serif; }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+            transform: translateY(-4px);
+        }
+        @keyframes pulseSlow {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulseSlow 6s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-slate-100 min-h-screen relative overflow-x-hidden">
+
+    <!-- Background glowing orbs -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+    <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow" style="animation-delay: 3s;"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-slate-800 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                <i class="fa-solid fa-brain text-white text-xl"></i>
+            </div>
+            <span class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">AI FOR THAI EDUCATION</span>
+        </div>
+        <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-300">
+            <a href="#vision" class="hover:text-cyan-400 transition">วิสัยทัศน์</a>
+            <a href="#pillars" class="hover:text-cyan-400 transition">4 เสาหลัก</a>
+            <a href="#unconventional" class="hover:text-cyan-400 transition">นวัตกรรม</a>
+            <a href="#edgebox" class="hover:text-cyan-400 transition">AI Edge Box</a>
+            <a href="#impact" class="hover:text-cyan-400 transition">ผลลัพธ์ครู</a>
+            <a href="#roadmap" class="hover:text-cyan-400 transition">แผน 10 ปี</a>
+        </div>
+        <a href="#proposal" class="bg-gradient-to-r from-indigo-500 to-cyan-500 text-white px-5 py-2 rounded-xl font-medium shadow-lg shadow-cyan-500/20 hover:scale-105 transition active:scale-95">
+            <i class="fa-solid fa-rocket mr-2"></i> ข้อเสนอโครงการ
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative max-w-7xl mx-auto px-6 py-20 lg:py-32 text-center">
+        <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-sm font-semibold tracking-wide">
+            TRACK 1: EDUCATION & PRODUCTIVITY
+        </div>
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+            ปฏิวัติการศึกษาไทยด้วย <br>
+            <span class="bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">ปัญญาประดิษฐ์ (AI)</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+            ยกระดับคุณภาพการเรียนรู้ ปลดล็อคขีดจำกัดครูผู้สอน และทลายความเหลื่อมล้ำระดับประเทศด้วยระบบนิเวศปัญญาประดิษฐ์อัจฉริยะ
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
+            <div class="glass-card px-6 py-4 rounded-2xl flex items-center space-x-3 glow-effect transition duration-300">
+                <i class="fa-solid fa-user-check text-cyan-400 text-2xl"></i>
+                <div class="text-left">
+                    <div class="text-xs text-slate-400">เป้าหมายหลัก 1</div>
+                    <div class="font-bold text-sm">Personalized Learning for All</div>
+                </div>
+            </div>
+            <div class="glass-card px-6 py-4 rounded-2xl flex items-center space-x-3 glow-effect transition duration-300">
+                <i class="fa-solid fa-chart-line text-indigo-400 text-2xl"></i>
+                <div class="text-left">
+                    <div class="text-xs text-slate-400">เป้าหมายหลัก 2</div>
+                    <div class="font-bold text-sm">ลดภาระงานครู 40% & ทลายความเหลื่อมล้ำ</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 4 Pillars Section -->
+    <section id="pillars" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl lg:text-4xl font-bold mb-4">4 เสาหลักการพัฒนาการศึกษาด้วย AI</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">โครงสร้างพื้นฐานอัจฉริยะที่ออกแบบมาเพื่อปฏิรูปห้องเรียนไทยทั้งระบบ</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Pillar 1 -->
+            <div class="glass-card rounded-2xl p-6 glow-effect transition duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:bg-indigo-500 group-hover:text-white transition">
+                        01
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">AI Personal Mentor</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        ผู้ช่วยสอนส่วนตัว 24 ชั่วโมง วิเคราะห์จุดแข็งจุดอ่อนและปรับบทเรียนเฉพาะบุคคลตามศักยภาพของเด็กแต่ละคน
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-700/50 text-cyan-400 text-xs font-semibold flex items-center">
+                    <i class="fa-solid fa-bolt mr-2"></i> Real-time Adaptation
+                </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="glass-card rounded-2xl p-6 glow-effect transition duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-white transition">
+                        02
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Teacher Co-Pilot</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        ช่วยครูเตรียมการสอน ออกแบบสื่อ สร้างและตรวจข้อสอบอัตนัย พร้อมลดงานธุรการอย่างตรงจุด
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-700/50 text-cyan-400 text-xs font-semibold flex items-center">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> คืนเวลาให้ครู 70%
+                </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="glass-card rounded-2xl p-6 glow-effect transition duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:bg-teal-500 group-hover:text-white transition">
+                        03
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Equal Access Edge</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        ระบบ AI แบบ Offline Edge Box ส่งตรงสื่อคุณภาพสูงถึงโรงเรียนในพื้นที่ห่างไกลและบนดอย โดยไม่ต้องพึ่งอินเทอร์เน็ต
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-700/50 text-teal-400 text-xs font-semibold flex items-center">
+                    <i class="fa-solid fa-wifi-slash mr-2"></i> Zero Internet Dependency
+                </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="glass-card rounded-2xl p-6 glow-effect transition duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:bg-purple-500 group-hover:text-white transition">
+                        04
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Policy Analytics</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        แดชบอร์ดข้อมูลจริงสำหรับ ศธ. ช่วยวิเคราะห์ความเสี่ยงเด็กหลุดระบบ และจัดสรรงบประมาณได้อย่างแม่นยำ
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-700/50 text-purple-400 text-xs font-semibold flex items-center">
+                    <i class="fa-solid fa-chart-pie mr-2"></i> Real-time National Data
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Unconventional Approaches -->
+    <section id="unconventional" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="glass-card rounded-3xl p-8 lg:p-12 relative overflow-hidden border border-cyan-500/20">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 text-xs font-bold tracking-widest uppercase bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">UNCONVENTIONAL APPROACHES</span>
+                <h2 class="text-3xl lg:text-4xl font-bold mt-4 mb-2">การก้าวข้ามขีดจำกัดเดิมของการศึกษายุคเก่า</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold">1</div>
+                        <h3 class="text-lg font-bold">Local Dialect Voice AI</h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        ทลายอุปสรรคภาษาด้วย AI สื่อสารภาษาถิ่น (คำเมือง, อีสาน, ใต้) อธิบายบทเรียนซับซ้อนให้เด็กเข้าใจได้อย่างเป็นกันเองและเข้าถึงง่าย
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold">2</div>
+                        <h3 class="text-lg font-bold">Multimodal Micro-Diagnostic</h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        วิเคราะห์ความเข้าใจจากน้ำเสียงและการแก้โจทย์แบบเรียลไทม์ โดยไม่ต้องสอบวัดผลแบบเดิมที่สร้างความเครียดให้แก่ผู้เรียน
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-400 font-bold">3</div>
+                        <h3 class="text-lg font-bold">Gamified Micro-Credential</h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        เปลี่ยนวิชาเรียนเป็นทักษะย่อย สะสม Badges เชื่อมโยงสู่สายอาชีพจริงตั้งแต่ระดับมัธยม พร้อมสร้างพอร์ตโฟลิโอไดนามิก
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold">4</div>
+                        <h3 class="text-lg font-bold">Social-Emotional Hub</h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        เมื่อ AI รับภาระถ่ายทอดความรู้ 100% ครูไทยจะก้าวข้ามสู่การเป็น "ผู้ดูแลจิตวิทยาและแรงบันดาลใจ" พัฒนา EQ และทักษะสังคมของเด็กอย่างแท้จริง
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offline First AI Box Section -->
+    <section id="edgebox" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-teal-400 text-xs font-bold tracking-widest uppercase bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">OFFLINE-FIRST AI EDGE BOX</span>
+                <h2 class="text-3xl lg:text-4xl font-bold mt-4 mb-6">ขจัดช่องว่างดิจิทัล ทลายความเหลื่อมล้ำเชิงพื้นที่</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-4 bg-slate-800/40 p-4 rounded-xl border border-slate-700/50">
+                        <div class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">AI Hardware Edge Box</h4>
+                            <p class="text-slate-300 text-sm">ประมวลผล Local ด้วย Small Language Models (SLM) แม่นยำในตัวกล่อง รองรับโซลาร์เซลล์สำหรับโรงเรียนบนดอย</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 bg-slate-800/40 p-4 rounded-xl border border-slate-700/50">
+                        <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-sync"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Sync ข้อมูลอัตโนมัติ</h4>
+                            <p class="text-slate-300 text-sm">อัปเดตหลักสูตรและข้อมูลใหม่ทันทีเมื่อมีการเชื่อมต่อโครงข่ายอินเทอร์เน็ตชั่วคราว</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 bg-slate-800/40 p-4 rounded-xl border border-slate-700/50">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">100% Equal Access</h4>
+                            <p class="text-slate-300 text-sm">เด็กในพื้นที่ห่างไกลเข้าถึงคู่คิด AI คุณภาพเดียวกับนักเรียนในกรุงเทพฯ ไร้ข้อจำกัดเรื่องสัญญาณ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Demo Card -->
+            <div class="glass-card rounded-3xl p-8 border border-slate-700 shadow-2xl relative">
+                <div class="absolute top-4 right-4 flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <div class="text-sm font-semibold text-slate-400 mb-4"><i class="fa-solid fa-terminal mr-2"></i> AI Edge Box Simulator</div>
+                
+                <div class="bg-slate-900 rounded-2xl p-6 mb-6 font-mono text-sm border border-slate-800">
+                    <div class="text-cyan-400 mb-2">$ system status: ONLINE (OFFLINE MODE ACTIVE)</div>
+                    <div class="text-slate-300 mb-4">> SLM Model Loaded: Thai-Education-SLM-v2</div>
+                    <div class="bg-slate-800/80 p-4 rounded-xl text-slate-200 mb-3">
+                        <span class="text-emerald-400">AI Tutor (สำเนียงเหนือ):</span> "สวัสดีเจ้า น้องๆ วันนี้เฮามาเรียนเรื่องวิชาคำนวณกันเนอะ มีอะიหยังให้ปี้ช่วยกึ๊ดก่อเจ้า?"
+                    </div>
+                    <div class="text-slate-400 text-xs italic">💡 รองรับภาษาถิ่น คำเมือง, อีสาน, ใต้ ประมวลผลภายในกล่อง 100%</div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="bg-slate-800/60 p-3 rounded-xl">
+                        <div class="text-cyan-400 font-bold text-lg">0 Mbps</div>
+                        <div class="text-xs text-slate-400">Required Internet</div>
+                    </div>
+                    <div class="bg-slate-800/60 p-3 rounded-xl">
+                        <div class="text-teal-400 font-bold text-lg">Solar</div>
+                        <div class="text-xs text-slate-400">Power Ready</div>
+                    </div>
+                    <div class="bg-slate-800/60 p-3 rounded-xl">
+                        <div class="text-indigo-400 font-bold text-lg">100%</div>
+                        <div class="text-xs text-slate-400">Data Privacy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teacher Impact Section -->
+    <section id="impact" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <span class="text-indigo-400 text-xs font-bold tracking-widest uppercase bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">TEACHER EMPOWERMENT</span>
+            <h2 class="text-3xl lg:text-4xl font-bold mt-4 mb-4">คืนเวลาให้ครู คืนชีวิตให้ห้องเรียน</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">เปลี่ยนครูจากการจมกองเอกสาร สู่การเป็นที่ปรึกษาและโค้ชด้านจิตวิทยาให้กับเด็กๆ</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card rounded-3xl p-8 text-center glow-effect transition">
+                <div class="text-5xl lg:text-6xl font-extrabold text-cyan-400 mb-4">-70%</div>
+                <h3 class="text-lg font-bold text-white mb-2">เวลาเอกสารธุรการ</h3>
+                <p class="text-slate-300 text-sm">ระบบ AI ช่วยร่างเอกสาร ประเมินผล และสรุปรายงานประจำเดือนให้อัตโนมัติอย่างแม่นยำ</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 text-center glow-effect transition">
+                <div class="text-5xl lg:text-6xl font-extrabold text-indigo-400 mb-4">10x</div>
+                <h3 class="text-lg font-bold text-white mb-2">ความเร็วสร้างสื่อการสอน</h3>
+                <p class="text-slate-300 text-sm">ออกแบบแผนการสอน สื่อประกอบ และชุดข้อสอบที่ตรงตามหลักสูตรแกนกลางได้อย่างรวดเร็ว</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 text-center glow-effect transition">
+                <div class="text-5xl lg:text-6xl font-extrabold text-teal-400 mb-4">+3 hrs</div>
+                <h3 class="text-lg font-bold text-white mb-2">เวลามอบให้เด็กต่อวัน</h3>
+                <p class="text-slate-300 text-sm">เพิ่มเวลาดูแลเอาใจใส่ ให้คำปรึกษารายบุคคล และพัฒนาทักษะทางอารมณ์และสังคม (EQ/SQ)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap 10 Years Section -->
+    <section id="roadmap" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <span class="text-purple-400 text-xs font-bold tracking-widest uppercase bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">LONG-TERM ROADMAP</span>
+            <h2 class="text-3xl lg:text-4xl font-bold mt-4 mb-4">คาดการณ์อนาคตระยะกลางและ 10 ปีข้างหน้า</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">ภาพความสำเร็จตั้งแต่ปีแรกจนถึงปี 2035 (Lifelong Adaptive Learning)</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/60 relative">
+                <div class="text-cyan-400 font-bold text-sm mb-2">YEAR 1-2</div>
+                <h4 class="text-lg font-bold text-white mb-2">Foundation & Pilot</h4>
+                <p class="text-slate-300 text-sm">นำร่อง AI Box 500 โรงเรียนห่างไกล พร้อมติดตั้ง Teacher Co-Pilot ครอบคลุมครู 50,000 คน</p>
+            </div>
+
+            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/60 relative">
+                <div class="text-indigo-400 font-bold text-sm mb-2">YEAR 3</div>
+                <h4 class="text-lg font-bold text-white mb-2">National Rollout</h4>
+                <p class="text-slate-300 text-sm">ขยายผลสู่ทุกโรงเรียนทั่วประเทศ ปรับระบบข้อสอบอัตนัยและการวิเคราะห์ความรู้รายบุคคลเต็มรูปแบบ</p>
+            </div>
+
+            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/60 relative">
+                <div class="text-teal-400 font-bold text-sm mb-2">YEAR 4</div>
+                <h4 class="text-lg font-bold text-white mb-2">Skill-Match Ecosystem</h4>
+                <p class="text-slate-300 text-sm">เชื่อมต่อแนวการเรียนรู้เข้ากับตลาดแรงงานภาคเอกชนด้วย AI Micro-Credentials สะสมทักษะสู่อาชีพ</p>
+            </div>
+
+            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/60 relative">
+                <div class="text-purple-400 font-bold text-sm mb-2">YEAR 5 (2029-2030)</div>
+                <h4 class="text-lg font-bold text-white mb-2">PISA Score Revival</h4>
+                <p class="text-slate-300 text-sm">คะแนน PISA ของเด็กไทยเพิ่มขึ้นอย่างเห็นได้ชัด ช่องว่างผลสัมฤทธิ์ระหว่างเมืองและชนบทลดลง 50%</p>
+            </div>
+        </div>
+
+        <!-- 2035 Vision Card -->
+        <div class="glass-card rounded-3xl p-8 lg:p-12 border border-purple-500/30 bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-indigo-950/40">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="max-w-2xl">
+                    <span class="text-purple-400 text-xs font-bold tracking-widest uppercase bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">THE 10-YEAR HORIZON (2035)</span>
+                    <h3 class="text-2xl lg:text-3xl font-bold mt-4 mb-3">ฉากทัศน์ใหม่: "Lifelong Adaptive Learning"</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                        ยกเลิกเกรดแบบดั้งเดิม เปลี่ยนเป็น <strong>Dynamic Skill Portfolio</strong> เติบโตตามความถนัดจริง ไม่มีสอบตก ครูทำหน้าที่เป็น <strong>Human Experience Coach</strong> และเยาวชนไทยทุกคนพร้อมทำงานร่วมกับบริษัทระดับโลกอย่างไร้รอยต่อ
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-medium text-cyan-300 border border-slate-700">✨ Dynamic Portfolios</span>
+                        <span class="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-medium text-indigo-300 border border-slate-700">🤝 Human Experience Coach</span>
+                        <span class="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-medium text-teal-300 border border-slate-700">🌍 Global Workforce Ready</span>
+                    </div>
+                </div>
+                <div class="w-full lg:w-auto text-center">
+                    <div class="w-32 h-32 rounded-3xl bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center mx-auto shadow-2xl shadow-purple-500/30">
+                        <i class="fa-solid fa-graduation-cap text-white text-5xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy Comparison Table Section -->
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl lg:text-4xl font-bold mb-4">การเปรียบเทียบเชิงนโยบาย</h2>
+            <p class="text-slate-400">เปรียบเทียบสภาวะก่อนและหลังการดำเนินโครงการ AI Ecosystem</p>
+        </div>
+
+        <div class="glass-card rounded-3xl overflow-hidden border border-slate-700">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-700 bg-slate-800/80 text-slate-200 text-sm">
+                            <th class="p-5 font-bold">มิติการพัฒนา</th>
+                            <th class="p-5 font-bold text-red-400">สภาวะปัจจุบัน (Without AI)</th>
+                            <th class="p-5 font-bold text-cyan-400">เป้าหมายใน 5-10 ปี (With AI Ecosystem)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 text-sm text-slate-300">
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="p-5 font-semibold text-white">การปรับบทเรียน (Learning Pace)</td>
+                            <td class="p-5 text-slate-400">แบบเดียวกันทั้งห้อง (One-size-fits-all)</td>
+                            <td class="p-5 text-cyan-300">Hyper-Personalized ตามศักยภาพรายคน</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="p-5 font-semibold text-white">ภาระงานครู (Teacher Workload)</td>
+                            <td class="p-5 text-slate-400">งานธุรการและเอกสารกินเวลามากกว่า 40%</td>
+                            <td class="p-5 text-cyan-300">ระบบ AI จัดการธุรการ ครูเน้นดูแลเด็ก 100%</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="p-5 font-semibold text-white">ความเหลื่อมล้ำพื้นที่ห่างไกล</td>
+                            <td class="p-5 text-slate-400">ขาดแคลนครูและสื่อคุณภาพสูงในชนบท</td>
+                            <td class="p-5 text-cyan-300">Offline AI Box มอบสื่อมาตรฐานเดียวกับเมืองใหญ่</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="p-5 font-semibold text-white">การตัดสินใจเชิงนโยบาย ศธ.</td>
+                            <td class="p-5 text-slate-400">อิงข้อมูลรายปี มีความล่าช้าในการจัดสรร</td>
+                            <td class="p-5 text-cyan-300">Real-time National Learning Analytics Dashboard</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proposal Call to Action Section -->
+    <section id="proposal" class="max-w-7xl mx-auto px-6 py-20 text-center">
+        <div class="glass-card rounded-3xl p-10 lg:p-16 border border-cyan-500/30 bg-gradient-to-t from-indigo-950/60 to-slate-900/80 shadow-2xl">
+            <h2 class="text-3xl lg:text-5xl font-extrabold mb-6">ร่วมสร้างบทใหม่ของการศึกษาไทย</h2>
+            <p class="text-slate-300 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
+                เริ่มต้นปฏิวัติระบบเรียนรู้ตั้งแต่วันนี้ เพื่อส่งมอบความเท่าเทียมทางการศึกษา และเตรียมความพร้อมให้เด็กไทยทุกคนก้าวสู่อนาคตอย่างมั่นใจ
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="alert('ยินดีด้วย! บันทึกข้อเสนอโครงการนำร่อง (Pilot Project) เรียบร้อยแล้ว')" class="bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold px-8 py-4 rounded-2xl shadow-xl shadow-cyan-500/30 transition transform hover:-translate-y-1 active:translate-y-0">
+                    <i class="fa-solid fa-check-circle mr-2"></i> อนุมัติโครงการนำร่อง (Pilot Project)
+                </button>
+                <a href="https://github.com" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-8 py-4 rounded-2xl border border-slate-700 transition flex items-center">
+                    <i class="fa-brands fa-github mr-2 text-xl"></i> Deploy to GitHub Pages
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
+        <p>© 2026 AI FOR THAI EDUCATION | Track 1: Education & Productivity. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
