@@ -143,8 +143,8 @@
                     </p>
                 </div>
 
-                <!-- Scroll down whitespace indicator -->
-                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 text-slate-400 animate-bounce-slow">
+                <!-- Scroll down whitespace indicator (Will fade out on scroll) -->
+                <div id="scrollIndicator" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 text-slate-400 animate-bounce-slow transition-opacity duration-500">
                     <span class="text-xs tracking-widest uppercase font-medium text-cyan-400">เลื่อนเพื่อดูข้อมูล</span>
                     <i class="fa-solid fa-chevron-down text-cyan-400 text-sm"></i>
                 </div>
@@ -313,7 +313,7 @@
         </div>
     </div>
 
-    <!-- Script: Fingerprint Biometric Scanner & Pointer Support -->
+    <!-- Script: Fingerprint Biometric Scanner & Scroll Fade Effect -->
     <script>
         const scannerBtn = document.getElementById('scannerBtn');
         const progressRing = document.getElementById('progressRing');
@@ -323,6 +323,7 @@
         const scannerGlow = document.getElementById('scannerGlow');
         const scannerOverlay = document.getElementById('scannerOverlay');
         const mainContent = document.getElementById('mainContent');
+        const scrollIndicator = document.getElementById('scrollIndicator');
 
         let isVerified = false;
         try {
@@ -339,6 +340,17 @@
             mainContent.style.opacity = '1';
             document.body.classList.remove('overflow-hidden');
         }
+
+        // Hide "เลื่อนเพื่อดูข้อมูล" when user scrolls down
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                scrollIndicator.style.opacity = '0';
+                scrollIndicator.style.pointerEvents = 'none';
+            } else {
+                scrollIndicator.style.opacity = '1';
+                scrollIndicator.style.pointerEvents = 'auto';
+            }
+        });
 
         let isHolding = false;
         let progress = 0;
