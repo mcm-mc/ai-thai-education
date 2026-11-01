@@ -9,8 +9,17 @@
         const scannerOverlay = document.getElementById('scannerOverlay');
         const mainContent = document.getElementById('mainContent');
 
-        // ตรวจสอบว่าเคยยืนยันตัวตนในเซสชันนี้แล้วหรือยัง
-        if (sessionStorage.getItem('verified') === 'true') {
+        // ป้องกัน Error บน Safari Private Mode
+        let isVerified = false;
+        try {
+            if (sessionStorage.getItem('verified') === 'true') {
+                isVerified = true;
+            }
+        } catch (e) {
+            console.log('SessionStorage blocked');
+        }
+
+        if (isVerified) {
             scannerOverlay.style.display = 'none';
             mainContent.classList.remove('hidden');
             mainContent.style.opacity = '1';
@@ -69,8 +78,9 @@
             scannerStatus.classList.add('text-emerald-400');
             fpIcon.className = "fa-solid fa-check text-4xl text-emerald-400 scale-125 transition-transform duration-300";
             
-            // บันทึกสถานะว่าสแกนแล้ว
-            sessionStorage.setItem('verified', 'true');
+            try {
+                sessionStorage.setItem('verified', 'true');
+            } catch (e) {}
 
             setTimeout(() => {
                 scannerOverlay.style.opacity = '0';
