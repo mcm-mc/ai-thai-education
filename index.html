@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI FOR THAI EDUCATION - ปฏิวัติการศึกษาไทยด้วยปัญญาประดิษฐ์</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#06b6d4',
+                        darkBg: '#0f172a',
+                        cardBg: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            background-color: #0f172a;
+            color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
+        }
+        @keyframes rotateRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .scanner-ring {
+            animation: rotateRing 4s linear infinite;
+        }
+        @keyframes scanLaser {
+            0% { top: 0%; opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0.8; }
+        }
+        .laser-line {
+            animation: scanLaser 2s ease-in-out infinite alternate;
+        }
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+        .animate-bounce-slow {
+            animation: bounceSlow 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen overflow-hidden">
+
+    <!-- Fingerprint Scanner Splash Screen Overlay -->
+    <div id="scannerOverlay" class="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/30 via-slate-950 to-slate-950 pointer-events-none"></div>
+        
+        <div class="relative z-10 text-center px-4">
+            <div class="inline-block mb-4 px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-widest uppercase">
+                SECURE BIOMETRIC GATEWAY
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-white">ระบบตรวจสอบสิทธิ์ผู้เข้าชม</h2>
+            <p class="text-slate-400 text-sm mb-8">กดปุ่มแสกนลายนิ้วมือค้างไว้เพื่อเริ่มต้นระบบและเข้าสู่เว็บไซต์</p>
+
+            <!-- Scanner Box Container -->
+            <div class="relative w-36 h-36 mx-auto mb-6 flex items-center justify-center group cursor-pointer select-none" id="scannerBtn">
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyan-500/40 scanner-ring"></div>
+                <div class="absolute -inset-3 rounded-full border border-indigo-500/30 scanner-ring" style="animation-direction: reverse; animation-duration: 6s;"></div>
+                
+                <div id="scannerGlow" class="absolute inset-0 rounded-full bg-cyan-500/10 blur-xl transition-all duration-300"></div>
+
+                <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.1)" stroke-width="3" fill="none"></circle>
+                    <circle id="progressRing" cx="50" cy="50" r="46" stroke="#06b6d4" stroke-width="4" fill="none" stroke-dasharray="289" stroke-dashoffset="289" class="transition-all duration-75"></circle>
+                </svg>
+
+                <div class="relative w-24 h-24 rounded-full bg-slate-900/90 border border-slate-700 flex items-center justify-center shadow-2xl overflow-hidden">
+                    <div class="absolute inset-x-0 h-1 bg-cyan-400 shadow-[0_0_15px_#06b6d4] laser-line opacity-0" id="laserBeam"></div>
+                    <i id="fpIcon" class="fa-solid fa-fingerprint text-4xl text-slate-400 transition-colors duration-300"></i>
+                </div>
+            </div>
+
+            <div id="scannerStatus" class="text-xs sm:text-sm font-medium text-cyan-400 tracking-wider h-6">
+                [ แตะค้างไว้เพื่อสแกนลายนิ้วมือ ]
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Website Content (Hidden until verified) -->
+    <div id="mainContent" class="opacity-0 transition-opacity duration-1000 hidden">
+
+        <!-- Navigation Bar -->
+        <nav class="fixed top-0 left-0 right-0 z-40 glass-card border-b border-slate-800 px-4 sm:px-6 py-3 flex justify-between items-center shadow-lg">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center shadow-md shadow-cyan-500/30">
+                    <i class="fa-solid fa-brain text-white text-sm"></i>
+                </div>
+                <span class="text-sm sm:text-lg font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">AI FOR THAI EDUCATION</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-300">
+                <a href="#vision" class="hover:text-cyan-400 transition">วิสัยทัศน์</a>
+                <a href="#pillars" class="hover:text-cyan-400 transition">4 เสาหลัก</a>
+                <a href="#unconventional" class="hover:text-cyan-400 transition">นวัตกรรม</a>
+                <a href="#edgebox" class="hover:text-cyan-400 transition">AI Edge Box</a>
+                <a href="#impact" class="hover:text-cyan-400 transition">ผลลัพธ์ครู</a>
+            </div>
+            <a href="#proposal" class="bg-gradient-to-r from-indigo-500 to-cyan-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-medium shadow-md shadow-cyan-500/20 hover:scale-105 transition active:scale-95">
+                <i class="fa-solid fa-rocket mr-1"></i> ข้อเสนอโครงการ
+            </a>
+        </nav>
+
+        <!-- Main Content Container -->
+        <div class="pt-20 pb-16 px-4 sm:px-6 max-w-6xl mx-auto space-y-24">
+            
+            <!-- Section 1: Hero (Full Screen, No 4 Pillars, with Scroll Prompt) -->
+            <section id="vision" class="min-h-[calc(100vh-5rem)] flex flex-col items-center justify-center text-center py-12 relative">
+                <div class="max-w-3xl mx-auto">
+                    <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs sm:text-sm font-semibold tracking-wide">
+                        TRACK 1: EDUCATION & PRODUCTIVITY
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                        ปฏิวัติการศึกษาไทยด้วย <br>
+                        <span class="bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">ปัญญาประดิษฐ์ (AI)</span>
+                    </h1>
+                    <p class="text-sm sm:text-base lg:text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                        ยกระดับคุณภาพการเรียนรู้ ปลดล็อคขีดจำกัดครูผู้สอน และทลายความเหลื่อมล้ำระดับประเทศด้วยระบบนิเวศปัญญาประดิษฐ์อัจฉริยะ
+                    </p>
+                </div>
+
+                <!-- Scroll down whitespace indicator -->
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 text-slate-400 animate-bounce-slow">
+                    <span class="text-xs tracking-widest uppercase font-medium text-cyan-400">เลื่อนเพื่อดูข้อมูล</span>
+                    <i class="fa-solid fa-chevron-down text-cyan-400 text-sm"></i>
+                </div>
+            </section>
+
+            <!-- Section 2: 4 Pillars -->
+            <section id="pillars" class="py-12">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">4 เสาหลักการพัฒนาการศึกษาด้วย AI</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto">💡 แตะที่การ์ดแต่ละหัวข้อเพื่อเปิดหน้าเว็บเพจรายละเอียดเชิงลึก</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+                    <!-- Card 1 -->
+                    <a href="detail-mentor.html" class="glass-card rounded-2xl p-5 glow-effect transition flex flex-col justify-between cursor-pointer border border-indigo-500/30 hover:border-cyan-400 block">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-bold">01</div>
+                                    <h3 class="text-base font-bold text-white">AI Personal Mentor</h3>
+                                </div>
+                                <span class="text-cyan-400 text-xs font-medium bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20"><i class="fa-solid fa-eye mr-1"></i> ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">ผู้ช่วยสอนส่วนตัว 24 ชั่วโมง วิเคราะห์จุดแข็งจุดอ่อนและปรับบทเรียนเฉพาะบุคคลตามศักยภาพ</p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-700/50 text-cyan-400 text-xs font-semibold flex justify-between items-center">
+                            <span>Real-time Adaptation</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </div>
+                    </a>
+
+                    <!-- Card 2 -->
+                    <a href="detail-copilot.html" class="glass-card rounded-2xl p-5 glow-effect transition flex flex-col justify-between cursor-pointer border border-cyan-500/30 hover:border-cyan-400 block">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs font-bold">02</div>
+                                    <h3 class="text-base font-bold text-white">Teacher Co-Pilot</h3>
+                                </div>
+                                <span class="text-cyan-400 text-xs font-medium bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20"><i class="fa-solid fa-eye mr-1"></i> ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">ช่วยครูเตรียมการสอน ออกแบบสื่อ สร้างและตรวจข้อสอบอัตนัย พร้อมลดงานธุรการอย่างตรงจุด</p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-700/50 text-cyan-400 text-xs font-semibold flex justify-between items-center">
+                            <span>คืนเวลาให้ครู 70%</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </div>
+                    </a>
+
+                    <!-- Card 3 -->
+                    <a href="detail-edge.html" class="glass-card rounded-2xl p-5 glow-effect transition flex flex-col justify-between cursor-pointer border border-teal-500/30 hover:border-teal-400 block">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center text-xs font-bold">03</div>
+                                    <h3 class="text-base font-bold text-white">Equal Access Edge</h3>
+                                </div>
+                                <span class="text-teal-400 text-xs font-medium bg-teal-500/10 px-2.5 py-1 rounded-lg border border-teal-500/20"><i class="fa-solid fa-eye mr-1"></i> ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">ระบบ Offline Edge Box ส่งตรงสื่อคุณภาพสูงถึงโรงเรียนบนดอย ไร้กังวลเรื่องอินเทอร์เน็ต</p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-700/50 text-teal-400 text-xs font-semibold flex justify-between items-center">
+                            <span>Zero Internet Dependency</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </div>
+                    </a>
+
+                    <!-- Card 4 -->
+                    <a href="detail-analytics.html" class="glass-card rounded-2xl p-5 glow-effect transition flex flex-col justify-between cursor-pointer border border-purple-500/30 hover:border-purple-400 block">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">04</div>
+                                    <h3 class="text-base font-bold text-white">Policy Analytics</h3>
+                                </div>
+                                <span class="text-purple-400 text-xs font-medium bg-purple-500/10 px-2.5 py-1 rounded-lg border border-purple-500/20"><i class="fa-solid fa-eye mr-1"></i> ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">แดชบอร์ดข้อมูลจริงสำหรับ ศธ. ช่วยวิเคราะห์ความเสี่ยงเด็กหลุดระบบ และจัดสรรงบประมาณอย่างแม่นยำ</p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-700/50 text-purple-400 text-xs font-semibold flex justify-between items-center">
+                            <span>Real-time National Data</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Section 3: Unconventional Approaches -->
+            <section id="unconventional" class="py-12">
+                <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-cyan-500/25 max-w-5xl mx-auto w-full">
+                    <div class="text-center mb-6">
+                        <span class="text-cyan-400 text-xs font-bold tracking-widest uppercase bg-cyan-500/10 px-3.5 py-1 rounded-full border border-cyan-500/20">UNCONVENTIONAL APPROACHES</span>
+                        <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold mt-3">การก้าวข้ามขีดจำกัดเดิมของการศึกษายุคเก่า</h2>
+                        <p class="text-slate-400 text-xs mt-1">💡 แตะที่หัวข้อนวัตกรรมแต่ละข้อเพื่อดูรายละเอียดเชิงลึก</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="detail-inc1.html" class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 hover:border-cyan-400 transition block">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <h3 class="text-sm sm:text-base font-bold text-cyan-400">1. Local Dialect Voice AI</h3>
+                                <span class="text-[11px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm">ทลายอุปสรรคภาษาด้วย AI สื่อสารภาษาถิ่น (คำเมือง, อีสาน, ใต้) อธิบายบทเรียนเข้าใจง่าย</p>
+                        </a>
+                        <a href="detail-inc2.html" class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 hover:border-indigo-400 transition block">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <h3 class="text-sm sm:text-base font-bold text-indigo-400">2. Multimodal Micro-Diagnostic</h3>
+                                <span class="text-[11px] text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm">วิเคราะห์ความเข้าใจจากน้ำเสียงและการแก้โจทย์แบบเรียลไทม์ ไม่ต้องสอบแบบเดิม</p>
+                        </a>
+                        <a href="detail-inc3.html" class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 hover:border-teal-400 transition block">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <h3 class="text-sm sm:text-base font-bold text-teal-400">3. Gamified Micro-Credential</h3>
+                                <span class="text-[11px] text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded border border-teal-500/20">ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm">เปลี่ยนวิชาเรียนเป็นทักษะย่อย สะสม Badges เชื่อมโยงสู่สายอาชีพตั้งแต่ระดับมัธยม</p>
+                        </a>
+                        <a href="detail-inc4.html" class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 hover:border-purple-400 transition block">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <h3 class="text-sm sm:text-base font-bold text-purple-400">4. Social-Emotional Hub</h3>
+                                <span class="text-[11px] text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">ดูรายละเอียด</span>
+                            </div>
+                            <p class="text-slate-300 text-xs sm:text-sm">ครูก้าวข้ามสู่การเป็นผู้ดูแลจิตวิทยาและแรงบันดาลใจ พัฒนา EQ และทักษะสังคม</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: AI Edge Box & Impact -->
+            <section id="edgebox" class="py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
+                    <div>
+                        <span class="text-teal-400 text-xs font-bold tracking-widest uppercase bg-teal-500/10 px-3.5 py-1 rounded-full border border-teal-500/20">OFFLINE-FIRST AI EDGE BOX</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold mt-3 mb-3">ขจัดช่องว่างดิจิทัล ทลายความเหลื่อมล้ำเชิงพื้นที่</h2>
+                        <p class="text-slate-300 text-sm sm:text-base mb-4 leading-relaxed">ประมวลผล Local ด้วย Small Language Models (SLM) แม่นยำในตัวกล่อง รองรับโซลาร์เซลล์ Sync ข้อมูลอัตโนมัติเมื่อเชื่อมต่อเน็ตชั่วคราว</p>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-700 text-center">
+                        <div class="text-cyan-400 font-bold text-sm mb-4">AI EDGE BOX SIMULATOR</div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-slate-800/60 p-3.5 rounded-xl"><div class="text-cyan-400 font-bold text-base">0 Mbps</div><div class="text-xs text-slate-400">Internet</div></div>
+                            <div class="bg-slate-800/60 p-3.5 rounded-xl"><div class="text-teal-400 font-bold text-base">Solar</div><div class="text-xs text-slate-400">Power</div></div>
+                            <div class="bg-slate-800/60 p-3.5 rounded-xl"><div class="text-indigo-400 font-bold text-base">100%</div><div class="text-xs text-slate-400">Privacy</div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Proposal -->
+            <section id="proposal" class="py-12 text-center">
+                <div class="glass-card rounded-3xl p-8 sm:p-12 border border-cyan-500/30 bg-gradient-to-t from-indigo-950/60 to-slate-900/80 shadow-2xl max-w-4xl mx-auto w-full">
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-3">ร่วมสร้างบทใหม่ของการศึกษาไทย</h2>
+                    <p class="text-slate-300 max-w-xl mx-auto mb-6 text-sm sm:text-base leading-relaxed">
+                        เริ่มต้นปฏิวัติระบบเรียนรู้ตั้งแต่วันนี้ เพื่อส่งมอบความเท่าเทียมทางการศึกษา และเตรียมความพร้อมให้เด็กไทยทุกคน
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button onclick="alert('ยินดีด้วย! บันทึกข้อเสนอโครงการนำร่องเรียบร้อยแล้ว')" class="bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold px-6 py-3 rounded-xl shadow-xl shadow-cyan-500/30 hover:scale-105 transition text-xs sm:text-sm">
+                            <i class="fa-solid fa-check-circle mr-1.5"></i> อนุมัติโครงการนำร่อง (Pilot Project)
+                        </button>
+                    </div>
+                    <div class="mt-8 text-slate-500 text-xs">
+                        © 2026 AI FOR THAI EDUCATION | Track 1: Education & Productivity.
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Script: Fingerprint Biometric Scanner & Pointer Support -->
+    <script>
+        const scannerBtn = document.getElementById('scannerBtn');
+        const progressRing = document.getElementById('progressRing');
+        const scannerStatus = document.getElementById('scannerStatus');
+        const fpIcon = document.getElementById('fpIcon');
+        const laserBeam = document.getElementById('laserBeam');
+        const scannerGlow = document.getElementById('scannerGlow');
+        const scannerOverlay = document.getElementById('scannerOverlay');
+        const mainContent = document.getElementById('mainContent');
+
+        let isHolding = false;
+        let progress = 0;
+        let scanTimer = null;
+        const circumference = 289;
+
+        function startScanning(e) {
+            if (isHolding) return;
+            isHolding = true;
+            
+            laserBeam.style.opacity = '1';
+            scannerGlow.classList.remove('bg-cyan-500/10');
+            scannerGlow.classList.add('bg-cyan-500/40', 'scale-125');
+            fpIcon.classList.remove('text-slate-400');
+            fpIcon.classList.add('text-cyan-400', 'animate-pulse');
+            scannerStatus.textContent = "[ กำลังสแกนลายนิ้วมือ กรุณาถือค้างไว้... ]";
+
+            scanTimer = setInterval(() => {
+                progress += 2;
+                let offset = circumference - (progress / 100) * circumference;
+                progressRing.style.strokeDashoffset = offset;
+
+                if (progress >= 100) {
+                    clearInterval(scanTimer);
+                    completeScan();
+                }
+            }, 25);
+        }
+
+        function stopScanning() {
+            if (!isHolding || progress >= 100) return;
+            resetScan();
+        }
+
+        function resetScan() {
+            clearInterval(scanTimer);
+            isHolding = false;
+            progress = 0;
+            progressRing.style.strokeDashoffset = circumference;
+            laserBeam.style.opacity = '0';
+            scannerGlow.classList.add('bg-cyan-500/10');
+            scannerGlow.classList.remove('bg-cyan-500/40', 'scale-125');
+            fpIcon.classList.add('text-slate-400');
+            fpIcon.classList.remove('text-cyan-400', 'animate-pulse');
+            scannerStatus.textContent = "[ แตะค้างไว้เพื่อสแกนลายนิ้วมือ ]";
+        }
+
+        function completeScan() {
+            scannerStatus.textContent = "✔ ยืนยันตัวตนสำเร็จ กำลังเข้าสู่ระบบ...";
+            scannerStatus.classList.remove('text-cyan-400');
+            scannerStatus.classList.add('text-emerald-400');
+            fpIcon.className = "fa-solid fa-check text-4xl text-emerald-400 scale-125 transition-transform duration-300";
+            
+            setTimeout(() => {
+                scannerOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    scannerOverlay.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    mainContent.style.opacity = '1';
+                    document.body.classList.remove('overflow-hidden');
+                }, 700);
+            }, 800);
+        }
+
+        scannerBtn.addEventListener('pointerdown', startScanning);
+        window.addEventListener('pointerup', stopScanning);
+        window.addEventListener('pointercancel', stopScanning);
+    </script>
+</body>
+</html>
